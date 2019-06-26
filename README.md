@@ -16,7 +16,7 @@ Here are some notebooks to illustrate how this code can be used.
  
 ## Setup
 
-This starter code works with python 2.7 and above. To install the deps needed for training run:
+This starter code works with python 2.7 and above. To install the deps needed for training and visualization run:
 
 ```
 pip install -r  requirements.txt
