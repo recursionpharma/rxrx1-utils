@@ -1,0 +1,5 @@
+Cython # needed for tfrecord-lite
+pytest
+pytest-pythonpath
+tfrecord-lite==0.0.5
+yapf
