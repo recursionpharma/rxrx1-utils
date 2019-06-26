@@ -30,6 +30,15 @@ pip install -r preprocessing_requirements.txt
 
 ## Preprocessing
 
+Reading individual image files can become an IO bottleneck during training. This is will be a common problem faced by people who use this dataset so we are also releasing an example script to pack the images into TFRecords. We are also making available some pre-created TFRecords available in Google Cloud Storage. The pre-created TFRecords can be found at:
+
+```
+gs://rxrx1-us-central1/tfrecords
+gs://rxrx1-europe-west4/tfrecords
+```
+
+The data lives in these two regional buckets because when you train with TPUs you want to train from buckets in the same region as your TPU. Remember to use the appropriate bucket that is in the same region as your TPU!
+
 ### images2tfrecords
 
 Script that packs raw images from the `rxrx1` dataset into `TFRecord`s. This scripts runs locally or using Google DataFlow.
@@ -88,4 +97,9 @@ Once you are done with the TPU be sure to delete it!
 ctpu delete -name "$TPU_NAME" -tpu-only`
 ```
 
-You can then iterate on the code and spin up a TPU again when ready to try again. When you are done with your VM you can either stop it or delete it with the `ctpu` command.
+You can then iterate on the code and spin up a TPU again when ready to try again. 
+
+When you are done with your VM you can either stop it or delete it with the `ctpu` command, for example:
+```
+ctpu delete -name my-tpu-vm
+```
