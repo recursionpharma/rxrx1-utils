@@ -16,10 +16,16 @@ Here are some notebooks to illustrate how this code can be used.
  
 ## Setup
 
-This starter code works with python 2.7 and above. To install the needed deps run:
+This starter code works with python 2.7 and above. To install the deps needed for training run:
 
 ```
 pip install -r  requirements.txt
+```
+
+If you plan on using the preprocessing functionality you also need to install other deps:
+
+```
+pip install -r preprocessing_requirements.txt
 ```
 
 ## Preprocessing
@@ -59,4 +65,4 @@ pip install -r requirements.txt
 1. Spin up a preemptible TPU: `ctpu up -name "$TPU_NAME" -preemptible -tpu-only -tpu-size v3-8`
 1. Train the model: `python -m rxrx.main --model-dir "gs://path-to-bucket/trial-id/"` 
 1. Watch `tensorboard --logdir=gs://path-to-bucket/`
-
+1. Don't forget to turn off your TPU when you are done `ctpu delete -name "$TPU_NAME"  -tpu-only`

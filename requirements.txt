@@ -1,8 +1,6 @@
 toolz
 scikit-image
 pandas
-dask
-gcsfs
 google-cloud-storage
 google-api-python-client
 oauth2client
