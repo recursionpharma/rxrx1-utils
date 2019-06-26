@@ -9,7 +9,7 @@ To learn more about the dataset please visit [RxRx.ai](http://rxrx.ai).
 Here are some notebooks to illustrate how this code can be used.
 
  * [Image visualization][vis-notebook]
- * [Model training][training-notebook]
+ * [Model training on TPUs][training-notebook]
  
  [vis-notebook]: https://colab.research.google.com/github/recursionpharma/rxrx1-utils/blob/master/notebooks/visualization.ipynb
  [training-notebook]: https://colab.research.google.com/github/recursionpharma/rxrx1-utils/blob/master/notebooks/training.ipynb
@@ -30,7 +30,7 @@ Script that packs raw images from the `rxrx1` dataset into `TFRecord`s. This scr
 
 Run `python -m rxrx.preprocess.images2tfrecords --help` for usage instructions.
 
-## Training
+## Training on TPUs
 
 This repo has barebones starter code on how to train a model on the RxRx1 dataset using Google Cloud TPUs.
 
