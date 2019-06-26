@@ -48,21 +48,44 @@ You can also spin up a VM to launch jobs from. To understand TPUs the best place
 [ctpu-docs]: https://cloud.google.com/tpu/docs/ctpu-reference
 [download-ctpu]: https://github.com/tensorflow/tpu/tree/master/tools/ctpu#download
 
+### Example TPU workflow
 
-TODO: finish this part
+First spin up a VM:
+```
+ctpu up -vm-only -forward-agent -forward-ports -name my-tpu-vm
+```
 
-Below is an example workflow:
+This command will create the VM and `ssh` you into it. Note how the `-vm-only` flag is used. This allows you to spin up the VM separate from the TPU which helps prevent spending money on idle TPUs.
 
-1. Spin up a VM to using `ctpu`
-1. ssh into the tpu vm
-1. Setup the repo and install the dependencies
+Next, setup the repo and install the dependencies:
 ```
 git clone git@github.com:recursionpharma/rxrx1-utils.git
 cd rxrx1-utils
-pip install -r requirements.txt
+pip install -r requirements.txt # optional if just training!
 ```
-1. export TPU_NAME, something like `${USER\.\-}-v3-8`
-1. Spin up a preemptible TPU: `ctpu up -name "$TPU_NAME" -preemptible -tpu-only -tpu-size v3-8`
-1. Train the model: `python -m rxrx.main --model-dir "gs://path-to-bucket/trial-id/"` 
-1. Watch `tensorboard --logdir=gs://path-to-bucket/`
-1. Don't forget to turn off your TPU when you are done `ctpu delete -name "$TPU_NAME"  -tpu-only`
+
+Note that for just training you can skip the `pip install` since the VM will have all the needed deps already.
+
+Next you need to spin up a TPU for training:
+```
+export TPU_NAME=my-tpu-v3-8
+ctpu up -name "$TPU_NAME" -preemptible -tpu-only -tpu-size v3-8
+```
+
+Once that is complete you can start a training job:
+```
+python -m rxrx.main --model-dir "gs://path-to-bucket/trial-id/"
+```
+You'll also want to launch a `tensorboard` to watch to check the results:
+
+```
+tensorboard --logdir=gs://path-to-bucket/
+```
+Since we used the `-forward-ports` in the `ctpu` command when starting the VM you will be able to view `tensorboard` on your localhost.
+
+Once you are done with the TPU be sure to delete it!
+```
+ctpu delete -name "$TPU_NAME" -tpu-only`
+```
+
+You can then iterate on the code and spin up a TPU again when ready to try again. When you are done with your VM you can either stop it or delete it with the `ctpu` command.
