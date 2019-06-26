@@ -58,7 +58,7 @@ def load_images_as_tensor(image_paths, dtype=np.uint8):
     return data
 
 
-def convert_tensor_to_rgb(t, channels, vmax=255):
+def convert_tensor_to_rgb(t, channels=DEFAULT_CHANNELS, vmax=255):
     colored_channels = []
     for i, channel in enumerate(channels):
         x = (t[:, :, i] / vmax) / \
