@@ -30,7 +30,7 @@ pip install -r preprocessing_requirements.txt
 
 ## Preprocessing
 
-Reading individual image files can become an IO bottleneck during training. This is will be a common problem faced by people who use this dataset so we are also releasing an example script to pack the images into TFRecords. We are also making available some pre-created TFRecords available in Google Cloud Storage. Read more about the [provided TFRecords below](#provided-tfrecords).
+Reading individual image files can become an IO bottleneck during training. This is will be a common problem faced by people who use this dataset so we are also releasing an example script to pack the images into TFRecords and `zarr` files. We are also making available some pre-created TFRecords available in Google Cloud Storage. Read more about the [provided TFRecords below](#provided-tfrecords).
 
 
 ### images2tfrecords
@@ -38,6 +38,16 @@ Reading individual image files can become an IO bottleneck during training. This
 Script that packs raw images from the `rxrx1` dataset into `TFRecord`s. This scripts runs locally or using Google DataFlow.
 
 Run `python -m rxrx.preprocess.images2tfrecords --help` for usage instructions.
+
+
+### images2zarr
+
+Script that packs raw images from the `rxrx1` dataset into `zarr`s. This script only runs locally but could easily be extended to run using Google DataFlow. 
+
+This script packs each site image into a single `zarr`. So, instead of having to load 6 separate channel `png`s for a singe image all of those channels will be saved together in a single `zarr` file.
+You could extend the script to pack more images into a single `zarr` file similar to what is done for `TFRecord`s. This is left as an exercise to the IO bound reader. :) Read more about the Zarr format and library [here](https://zarr.readthedocs.io/en/stable/).
+
+Run `python -m rxrx.preprocess.images2zarr --help` for usage instructions.
 
 ## Training on TPUs
 
