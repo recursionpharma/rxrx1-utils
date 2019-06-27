@@ -17,7 +17,7 @@ def zarrify(x, dest, chunk=512, compression=DEFAULT_COMPRESSION):
     compressor = None
     if compression:
         compressor = zarr.Blosc(**compression)
-    os.makedirs(os.dirname(dest), exist_ok=True)
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
     z = zarr.open(
         dest,
         mode="w",
