@@ -30,14 +30,8 @@ pip install -r preprocessing_requirements.txt
 
 ## Preprocessing
 
-Reading individual image files can become an IO bottleneck during training. This is will be a common problem faced by people who use this dataset so we are also releasing an example script to pack the images into TFRecords. We are also making available some pre-created TFRecords available in Google Cloud Storage. The pre-created TFRecords can be found at:
+Reading individual image files can become an IO bottleneck during training. This is will be a common problem faced by people who use this dataset so we are also releasing an example script to pack the images into TFRecords. We are also making available some pre-created TFRecords available in Google Cloud Storage. Read more about the [provided TFRecords below](#provided-tfrecords).
 
-```
-gs://rxrx1-us-central1/tfrecords
-gs://rxrx1-europe-west4/tfrecords
-```
-
-The data lives in these two regional buckets because when you train with TPUs you want to train from buckets in the same region as your TPU. Remember to use the appropriate bucket that is in the same region as your TPU!
 
 ### images2tfrecords
 
@@ -103,3 +97,39 @@ When you are done with your VM you can either stop it or delete it with the `ctp
 ```
 ctpu delete -name my-tpu-vm
 ```
+
+## Provided TFRecords
+
+As noted above we are providing TFRecords. They live in the following buckets:
+
+```
+gs://rxrx1-us-central1/tfrecords
+gs://rxrx1-europe-west4/tfrecords
+```
+
+The data lives in these two regional buckets because when you train with TPUs you want to train from buckets in the same region as your TPU. Remember to use the appropriate bucket that is in the same region as your TPU!
+
+The directory structure of the TFRecords is as follows:
+
+```
+└── tfrecords
+         ├── by_exp_plate_site-42
+         │   ├── train
+         │   │   ├── HEPG2-10_p1_s1.tfrecord
+         │   │   ├── HEPG2-10_p1_s2.tfrecord
+         │   │   ├── ….
+         │   ├── test 
+         │   │   ├── U2OS-03_p3_s2.tfrecord
+         │   │   ├── U2OS-03_p4_s2.tfrecord
+         │       └── U2OS-03_p4_s2.tfrecord
+         └── random-42
+           ├── train
+           │   ├── 001.tfrecord
+           │   ├── 002.tfrecord
+…. 
+```
+The `random-42` denotes that the data has been split up randomly across different tfrecords, each record holding ~1000 examples. The `42` is the random seed used to generate this partition. The example code in this repository uses this version of the data.
+
+The `by_exp_plate_site-42` is where each TFRecord contains an all of the images for a particular experiment, plate, and site grouping. Internally the well addresses are random in the TFRecord. The advantage of this grouping is that you can easily opt in to train on only certain `cell_types` (each experiment name is prefixed by the `cell_type`) or sites. For example, since there is not much site variability between plates you can easily train on half of the data by using the files `gs://rxrx1*/tfrecords/by_exp_plate_site-42/train/*s1.tfrecord`. Or if you only want to train on experiments with the `cell_type` HUVEC: `gs://rxrx1*/tfrecords/by_exp_plate_site-42/train/HUVEC*.tfrecord`. Due to the grouping each TFRecord here has only about ~277 examples per file.
+
+For good training batch diversity it is recommended that you use the TF Dataset API to interleave examples from these various files. The provided `input_fn` in this repository already does this.
