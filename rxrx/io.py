@@ -58,15 +58,15 @@ def load_images_as_tensor(image_paths, dtype=np.uint8):
     return data
 
 
-def convert_tensor_to_rgb(t, channels=DEFAULT_CHANNELS, vmax=255):
+def convert_tensor_to_rgb(t, channels=DEFAULT_CHANNELS, vmax=255, rgb_map=RGB_MAP):
     colored_channels = []
     for i, channel in enumerate(channels):
         x = (t[:, :, i] / vmax) / \
-            ((RGB_MAP[channel]['range'][1] - RGB_MAP[channel]['range'][0]) / 255) + \
-            RGB_MAP[channel]['range'][0] / 255
+            ((rgb_map[channel]['range'][1] - rgb_map[channel]['range'][0]) / 255) + \
+            rgb_map[channel]['range'][0] / 255
         x = np.where(x > 1., 1., x)
         x_rgb = np.array(
-            np.outer(x, RGB_MAP[channel]['rgb']).reshape(512, 512, 3),
+            np.outer(x, rgb_map[channel]['rgb']).reshape(512, 512, 3),
             dtype=int)
         colored_channels.append(x_rgb)
     im = np.array(np.array(colored_channels).sum(axis=0), dtype=int)
