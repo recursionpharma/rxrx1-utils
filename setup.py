@@ -1,3 +1,4 @@
+# this setup file is for the dataflow job only at this point
 import setuptools
 
 # Configure the required packages and scripts to install.

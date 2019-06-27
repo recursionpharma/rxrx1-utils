@@ -251,7 +251,7 @@ def run_on_dataflow(to_pack, dest_path, images_path, channels, runner, project):
         'save_main_session':
         True,
         'setup_file': (os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), '../../dataflow_setup.py')),
+            os.path.dirname(os.path.abspath(__file__)), '../../setup.py')),
         'runner':
         runner,
         'project':
