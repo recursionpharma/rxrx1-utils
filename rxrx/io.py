@@ -59,6 +59,25 @@ def load_images_as_tensor(image_paths, dtype=np.uint8):
 
 
 def convert_tensor_to_rgb(t, channels=DEFAULT_CHANNELS, vmax=255, rgb_map=RGB_MAP):
+    """
+    Converts and returns the image data as RGB image
+
+    Parameters
+    ----------
+    t : np.ndarray
+        original image data
+    channels : list of int
+        channels to include
+    vmax : int
+        the max value used for scaling
+    rgb_map : dict
+        the color mapping for each channel
+        See rxrx.io.RGB_MAP to see what the defaults are.
+
+    Returns
+    -------
+    np.ndarray the image data of the site as RGB channels
+    """
     colored_channels = []
     for i, channel in enumerate(channels):
         x = (t[:, :, i] / vmax) / \
@@ -157,7 +176,7 @@ def load_site_as_rgb(dataset,
                      base_path=DEFAULT_IMAGES_BASE_PATH,
                      rgb_map=RGB_MAP):
     """
-    Returns the image data as RGB image
+    Loads and returns the image data as RGB image
 
     Parameters
     ----------
@@ -181,7 +200,7 @@ def load_site_as_rgb(dataset,
 
     Returns
     -------
-    np.ndarray the image data of the site
+    np.ndarray the image data of the site as RGB channels
     """
     x = load_site(dataset, experiment, plate, well, site, channels, base_path)
     return convert_tensor_to_rgb(x, channels, rgb_map=rgb_map)
