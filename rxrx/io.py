@@ -154,7 +154,8 @@ def load_site_as_rgb(dataset,
                      well,
                      site,
                      channels=DEFAULT_CHANNELS,
-                     base_path=DEFAULT_IMAGES_BASE_PATH):
+                     base_path=DEFAULT_IMAGES_BASE_PATH,
+                     rgb_map=RGB_MAP):
     """
     Returns the image data as RGB image
 
@@ -174,13 +175,16 @@ def load_site_as_rgb(dataset,
         channels to include
     base_path : str
         the base path of the raw images
+    rgb_map : dict
+        the color mapping for each channel
+        See rxrx.io.RGB_MAP to see what the defaults are.
 
     Returns
     -------
     np.ndarray the image data of the site
     """
     x = load_site(dataset, experiment, plate, well, site, channels, base_path)
-    return convert_tensor_to_rgb(x, channels)
+    return convert_tensor_to_rgb(x, channels, rgb_map=rgb_map)
 
 
 def _tf_read_csv(path):
