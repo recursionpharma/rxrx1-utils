@@ -275,8 +275,9 @@ def run_on_dataflow(to_pack, dest_path, images_path, channels, runner, project):
 def cli():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter,
-        description="Packs the raw TIF images into TFRecords.")
-    parser.add_argument("--raw-images", type=str, help="Path of the raw images")
+        description="Packs the raw PNG images into TFRecords.")
+    parser.add_argument("--raw-images", type=str, help="Path of the raw images",
+                        default=rio.DEFAULT_IMAGES_BASE_PATH)
     parser.add_argument(
         "--metadata", type=str, help="Path to the metadata directory",
         default=rio.DEFAULT_METADATA_BASE_PATH)
