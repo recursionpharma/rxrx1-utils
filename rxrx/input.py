@@ -88,11 +88,6 @@ def input_fn(tf_records_glob,
 
     filenames_dataset = tf.data.Dataset.list_files(tf_records_glob)
 
-    # commenting the conditional out to get around issue.. https://recursion.slack.com/archives/CEN1XMHQE/p1553398571006000
-    #if is_training:
-    filenames_dataset = filenames_dataset.apply(
-        tf.contrib.data.shuffle_and_repeat(shuffle_buffer))
-
     def fetch_images(filenames):
         dataset = tf.data.TFRecordDataset(
             filenames,
@@ -113,6 +108,8 @@ def input_fn(tf_records_glob,
                 'parallel_interleave_buffer_output_elements'],
             prefetch_input_elements=input_fn_params[
                 'parallel_interleave_prefetch_input_elements']))
+
+    images_dataset = images_dataset.shuffle(2048).repeat()
 
     # examples dataset
     dataset = images_dataset.apply(

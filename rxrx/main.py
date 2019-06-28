@@ -362,6 +362,18 @@ def main(use_tpu,
     tf.logging.info('Finished training up to step %d. Elapsed seconds %d.',
                     train_steps, elapsed_time)
 
+    tf.logging.info('Exporting SavedModel.')
+
+    def serving_input_receiver_fn():
+        features = {
+          'feature': tf.placeholder(dtype=tf.float32, shape=[None, 512, 512, 6]),
+        }
+        receiver_tensors = features
+        return tf.estimator.export.ServingInputReceiver(features, receiver_tensors)
+
+    resnet_classifier.export_saved_model(os.path.join(model_dir, 'saved_model'), serving_input_receiver_fn)
+
+
 if __name__ == '__main__':
 
     p = argparse.ArgumentParser(description='Train ResNet on rxrx1')
