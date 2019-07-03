@@ -333,7 +333,7 @@ def main(use_tpu,
 
     use_bfloat16 = (tf_precision == 'bfloat16')
 
-    train_glob = os.path.join(url_base_path, 'train', '*.tfrecord')
+    train_glob = os.path.join(url_base_path, '*.tfrecord')
 
     tf.logging.info("Train glob: {}".format(train_glob))
 
