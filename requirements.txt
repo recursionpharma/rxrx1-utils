@@ -4,5 +4,5 @@ pandas
 google-cloud-storage
 google-api-python-client
 oauth2client
-tensorflow==1.13.1
+tensorflow==1.15.2
 apache-beam[gcp]
