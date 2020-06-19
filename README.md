@@ -10,10 +10,10 @@ Here are some notebooks to illustrate how this code can be used.
 
  * [Image visualization][vis-notebook]
  * [Model training on TPUs][training-notebook]
- 
- [vis-notebook]: https://colab.research.google.com/github/recursionpharma/rxrx1-utils/blob/master/notebooks/visualization.ipynb
- [training-notebook]: https://colab.research.google.com/github/recursionpharma/rxrx1-utils/blob/master/notebooks/training.ipynb
- 
+
+ [vis-notebook]: https://colab.research.google.com/github/recursionpharma/rxrx1-utils/blob/trunk/notebooks/visualization.ipynb
+ [training-notebook]: https://colab.research.google.com/github/recursionpharma/rxrx1-utils/blob/trunk/notebooks/training.ipynb
+
 ## Setup
 
 This starter code works with python 2.7 and above. To install the deps needed for training and visualization run:
@@ -42,7 +42,7 @@ Run `python -m rxrx.preprocess.images2tfrecords --help` for usage instructions.
 
 ### images2zarr
 
-Script that packs raw images from the `rxrx1` dataset into `zarr`s. This script only runs locally but could easily be extended to run using Google DataFlow. 
+Script that packs raw images from the `rxrx1` dataset into `zarr`s. This script only runs locally but could easily be extended to run using Google DataFlow.
 
 This script packs each site image into a single `zarr`. So, instead of having to load 6 separate channel `png`s for a singe image all of those channels will be saved together in a single `zarr` file.
 You could extend the script to pack more images into a single `zarr` file similar to what is done for `TFRecord`s. This is left as an exercise to the IO bound reader. :) Read more about the Zarr format and library [here](https://zarr.readthedocs.io/en/stable/).
@@ -101,7 +101,7 @@ Once you are done with the TPU be sure to delete it!
 ctpu delete -name "$TPU_NAME" -tpu-only`
 ```
 
-You can then iterate on the code and spin up a TPU again when ready to try again. 
+You can then iterate on the code and spin up a TPU again when ready to try again.
 
 When you are done with your VM you can either stop it or delete it with the `ctpu` command, for example:
 ```
@@ -134,7 +134,7 @@ The directory structure of the TFRecords is as follows:
            ├── train
            │   ├── 001.tfrecord
            │   ├── 002.tfrecord
-…. 
+….
 ```
 The `random-42` denotes that the data has been split up randomly across different tfrecords, each record holding ~1000 examples. The `42` is the random seed used to generate this partition. The example code in this repository uses this version of the data.
 
