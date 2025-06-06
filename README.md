@@ -1,3 +1,5 @@
+[![scorecard-score](https://github.com/recursionpharma/octo-guard-badges/blob/trunk/badges/repo/rxrx1-utils/maturity_score.svg?raw=true)](https://infosec-docs.prod.rxrx.io/octoguard/scorecards/rxrx1-utils)
+[![scorecard-status](https://github.com/recursionpharma/octo-guard-badges/blob/trunk/badges/repo/rxrx1-utils/scorecard_status.svg?raw=true)](https://infosec-docs.prod.rxrx.io/octoguard/scorecards/rxrx1-utils)
 # rxrx1-utils
 
 Starter code for the CellSignal NeurIPS 2019 competition [hosted on Kaggle](https://www.kaggle.com/c/recursion-cellular-image-classification).
